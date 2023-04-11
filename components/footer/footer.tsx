@@ -1,7 +1,6 @@
 import Box from "@mui/material/Box";
 import React from "react";
 import getConfig from "next/config";
-import dayjs from "dayjs";
 import Typography from "@mui/material/Typography";
 
 const Footer: React.FC = () => {
@@ -13,7 +12,6 @@ const Footer: React.FC = () => {
       sx={(theme) => ({
         position: "absolute",
         bottom: 0,
-        width: "100%",
         padding: theme.spacing(2),
         backgroundColor: theme.palette.background.paper,
       })}

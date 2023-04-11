@@ -1,4 +1,4 @@
-import { BoardData } from "@/src/types/board.type";
+import { type BoardData } from "@/src/types/board.type";
 import { Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import React, { useEffect } from "react";
@@ -11,7 +11,7 @@ interface IProps {
 }
 
 const Timer: React.FC<IProps> = ({ data }) => {
-  const { seconds, minutes, isRunning, pause } = useStopwatch({
+  const { seconds, minutes, isRunning, pause, reset } = useStopwatch({
     autoStart: true,
   });
 
@@ -20,6 +20,12 @@ const Timer: React.FC<IProps> = ({ data }) => {
       pause();
     }
   }, [data.showResults, isRunning, pause]);
+
+  useEffect(() => {
+    if (data.ticket === null) {
+      reset();
+    }
+  }, [data.ticket, reset]);
 
   return (
     <Box>

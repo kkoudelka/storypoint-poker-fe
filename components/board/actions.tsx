@@ -35,12 +35,13 @@ const ActionButtons: React.FC<IProps> = ({ docRef, revealed, votes, data }) => {
   };
 
   const reset = async () => {
-    if (votes?.length === 0) return;
+    if (votes?.length === 0 && data?.ticket === null) return;
     try {
       await updateDoc<BoardData>(docRef, {
         showResults: false,
         votes: [],
         updated: new Date(),
+        ticket: null,
       });
     } catch (e) {
       console.log(e);
@@ -48,29 +49,31 @@ const ActionButtons: React.FC<IProps> = ({ docRef, revealed, votes, data }) => {
   };
 
   return (
-    <Fade in={isAdmin} unmountOnExit>
-      <Box
-        sx={(theme) => ({
-          display: "flex",
-          justifyContent: "center",
-          gap: theme.spacing(4),
-          mt: theme.spacing(5),
-        })}
-      >
-        <Button
-          variant="contained"
-          color="primary"
-          sx={{ color: "white" }}
-          onClick={revealResults}
-          disabled={revealed || votes?.length === 0}
+    <>
+      <Fade in={isAdmin} unmountOnExit>
+        <Box
+          sx={(theme) => ({
+            display: "flex",
+            justifyContent: "center",
+            gap: theme.spacing(4),
+            mt: theme.spacing(5),
+          })}
         >
-          Reveal results
-        </Button>
-        <Button variant="contained" color="error" onClick={reset}>
-          Reset
-        </Button>
-      </Box>
-    </Fade>
+          <Button
+            variant="contained"
+            color="primary"
+            sx={{ color: "white" }}
+            onClick={revealResults}
+            disabled={revealed || votes?.length === 0}
+          >
+            Reveal results
+          </Button>
+          <Button variant="contained" color="error" onClick={reset}>
+            Reset
+          </Button>
+        </Box>
+      </Fade>
+    </>
   );
 };
 
