@@ -6,7 +6,7 @@ import { getMainDefinition } from "@apollo/client/utilities";
 
 const wsLink = new GraphQLWsLink(
   createClient({
-    url: "ws://localhost:3005/graphql",
+    url: `${process.env.NEXT_PUBLIC_BE_WS_ROOT}/graphql`,
   }),
 );
 
