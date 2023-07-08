@@ -7,9 +7,9 @@ import Button from "@mui/material/Button";
 import Link from "next/link";
 import { m } from "framer-motion";
 import { useRouter } from "next/router";
+import { useRecoilState } from "recoil";
 import Footer from "../footer/footer";
 import { appName } from "@/src/utils";
-import { useRecoilState } from "recoil";
 import { goBackAtom } from "@/src/atoms/goBack";
 
 const Layout: React.FC<PropsWithChildren> = ({ children }) => {
@@ -42,7 +42,7 @@ const Layout: React.FC<PropsWithChildren> = ({ children }) => {
               </Link>
             </Box>
             <Button color="inherit" onClick={handleGoToChangeName}>
-              {"Change username"}
+              Change username
             </Button>
           </Toolbar>
         </AppBar>
@@ -55,7 +55,7 @@ const Layout: React.FC<PropsWithChildren> = ({ children }) => {
         transition={{ duration: 0.2 }}
       >
         <Box
-          sx={(theme) => ({
+          sx={theme => ({
             mt: theme.spacing(2),
             [theme.breakpoints.down("md")]: {
               pb: theme.spacing(2),

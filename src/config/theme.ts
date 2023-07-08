@@ -1,12 +1,24 @@
 import { createTheme } from "@mui/material/styles";
+import darkScrollbar from "@mui/material/darkScrollbar";
 
-const theme = createTheme({
-  palette: {
-    mode: "dark",
-    primary: {
-      main: "#ff6600",
+const makeTheme = (darkMode = true) => {
+  const theme = createTheme({
+    palette: {
+      mode: darkMode ? "dark" : "light",
+      primary: {
+        main: "#ff6600",
+      },
     },
-  },
-});
+    components: {
+      MuiCssBaseline: {
+        styleOverrides: themeParam => ({
+          body: themeParam.palette.mode === "dark" ? darkScrollbar() : null,
+        }),
+      },
+    },
+  });
 
-export default theme;
+  return theme;
+};
+
+export default makeTheme;

@@ -28,7 +28,7 @@ const NameChanger: React.FC = () => {
   });
 
   const onSubmit = (data: { name: string }) => {
-    setUser((current) => ({ ...current, name: data.name }));
+    setUser(current => ({ ...current, name: data.name }));
 
     if (goBackUrl) {
       router.push(goBackUrl);
@@ -41,9 +41,9 @@ const NameChanger: React.FC = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Box sx={(theme) => ({ mt: theme.spacing(2) })}>
+      <Box sx={theme => ({ mt: theme.spacing(2) })}>
         <Card
-          sx={(theme) => ({
+          sx={theme => ({
             p: theme.spacing(4),
             display: "flex",
             flexDirection: "column",
@@ -68,7 +68,7 @@ const NameChanger: React.FC = () => {
                 value: 2,
                 message: "Name must be at least 2 characters long",
               },
-              validate: (value) => !!value && value.length > 2,
+              validate: value => !!value && value.length > 2,
             })}
           />
           <Button

@@ -1,0 +1,11 @@
+mutation UpdateVote($code: String!, $vote: String) {
+  changeVote(code: $code, vote: $vote)
+}
+
+mutation ResetVotes($code: String!, $userId: Int) {
+  resetVotes(code: $code, userId: $userId)
+}
+
+mutation RemoveUserFromBoard($code: String!, $userId: Int!) {
+  removeUserFromBoard(code: $code, userId: $userId)
+}

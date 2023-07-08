@@ -1,0 +1,7 @@
+mutation UpdateUserBoardStatus($code: String!, $status: UserBoardStatus!) {
+  changeStatus(code: $code, status: $status)
+}
+
+mutation ChangeAdminStatus($code: String!, $admin: Boolean!, $userId: Int) {
+  changeAdminStatus(code: $code, admin: $admin, userId: $userId)
+}

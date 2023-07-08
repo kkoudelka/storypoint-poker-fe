@@ -1,0 +1,6 @@
+src/gql/types.ts
+.eslintrc.js
+
+node_modules/
+
+out/

@@ -1,0 +1,28 @@
+query GetBoards {
+  boards {
+    id
+    code
+    title
+    lastUpdate
+  }
+}
+
+query BoardDetail($boardCode: String!) {
+  board(code: $boardCode) {
+    id
+    title
+    status
+    ticket
+    ticketTimer
+    userVotes {
+      user {
+        id
+        username
+        email
+      }
+      status
+      vote
+      admin
+    }
+  }
+}

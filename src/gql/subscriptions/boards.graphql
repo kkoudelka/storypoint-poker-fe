@@ -1,0 +1,19 @@
+subscription BoardUpdate($code: String!) {
+  boardUpdate(code: $code) {
+    id
+    title
+    status
+    ticket
+    ticketTimer
+    userVotes {
+      user {
+        id
+        username
+        email
+      }
+      status
+      vote
+      admin
+    }
+  }
+}

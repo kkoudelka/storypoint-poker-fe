@@ -1,8 +1,8 @@
-import { type BoardData } from "@/src/types/board.type";
 import { Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import React, { useEffect } from "react";
 import { useStopwatch } from "react-timer-hook";
+import { type BoardData } from "@/src/types/board.type";
 
 const formatToTwoDigits = (num: number) => num.toString().padStart(2, "0");
 

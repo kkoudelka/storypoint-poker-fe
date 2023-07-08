@@ -19,13 +19,17 @@ const Board: React.FC<IProps> = ({ docRef, data }) => {
   const userVal = useRecoilValue(userAtom);
 
   const updateVote = (value: string) => async () => {
-    if (!userVal) return;
-    if (!data || !userVal.uuid) return;
+    if (!userVal) {
+      return;
+    }
+    if (!data || !userVal.uuid) {
+      return;
+    }
     const votes = data.votes;
 
-    const filtered = votes.filter((v) => v.userId !== userVal.uuid);
+    const filtered = votes.filter(v => v.userId !== userVal.uuid);
 
-    const self = votes.find((v) => v.userId === userVal.uuid);
+    const self = votes.find(v => v.userId === userVal.uuid);
     if (self && self.value === value) {
       try {
         await updateDoc<BoardData>(docRef, {
@@ -51,20 +55,20 @@ const Board: React.FC<IProps> = ({ docRef, data }) => {
   };
 
   const selectedValue = useMemo(
-    () => data?.votes.find((v) => v.userId === userVal?.uuid)?.value,
-    [data, userVal]
+    () => data?.votes.find(v => v.userId === userVal?.uuid)?.value,
+    [data, userVal],
   );
 
   return (
     <Box>
       <Grid spacing={2} container>
-        {options.map((option) => {
+        {options.map(option => {
           const isSelected = selectedValue === option;
           return (
             <Grid item xs={3} md={2} key={`card-${option}`}>
               <Card>
                 <CardActionArea
-                  sx={(theme) => ({
+                  sx={theme => ({
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",

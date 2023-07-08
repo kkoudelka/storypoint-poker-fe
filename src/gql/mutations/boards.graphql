@@ -1,0 +1,18 @@
+mutation JoinBoard($code: String!) {
+  joinBoard(code: $code)
+}
+
+mutation ChangeBoardStatus($code: String!, $status: BoardStatus!) {
+  changeBoardStatus(code: $code, status: $status)
+}
+
+mutation CreateBoard($title: String!) {
+  createBoard(title: $title) {
+    id
+    code
+  }
+}
+
+mutation UpdateTicket($code: String!, $ticket: String) {
+  updateBoardTicket(code: $code, ticket: $ticket)
+}

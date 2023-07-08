@@ -71,7 +71,6 @@ const TicketDialog: React.FC<IProps> = ({ docRef, data }) => {
             </DialogContentText>
             <TextField
               sx={{ mt: 4 }}
-              autoFocus
               margin="dense"
               {...register("ticketName")}
               label="Ticket name"

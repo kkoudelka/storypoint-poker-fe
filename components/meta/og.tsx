@@ -1,6 +1,6 @@
-import { appName, appUrl } from "@/src/utils";
 import Head from "next/head";
 import React from "react";
+import { appName, appUrl } from "@/src/utils";
 
 interface IProps {
   title?: string;
@@ -16,7 +16,9 @@ const OgMeta: React.FC<IProps> = ({
   url = appUrl,
 }) => {
   let imgUrl = image;
-  if (imgUrl.startsWith("/")) imgUrl = appUrl + image;
+  if (imgUrl.startsWith("/")) {
+    imgUrl = appUrl + image;
+  }
 
   return (
     <Head>

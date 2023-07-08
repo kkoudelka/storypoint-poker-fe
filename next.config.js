@@ -2,12 +2,15 @@
 const nextConfig = {
   reactStrictMode: true,
   publicRuntimeConfig: {
-    build: process.env.npm_package_version || '0.0.0',
-  }
-}
+    build: process.env.npm_package_version || "0.0.0",
+  },
+  experimental: {
+    appDir: true,
+  },
+};
 
-const withPWA = require('next-pwa')({
-  dest: 'public',
+const withPWA = require("next-pwa")({
+  dest: "public",
   // disable: process.env.NODE_ENV === 'development',
   disable: true,
 
@@ -16,6 +19,6 @@ const withPWA = require('next-pwa')({
   // scope: '/app',
   // sw: 'service-worker.js',
   //...
-})
+});
 
 module.exports = withPWA(nextConfig);

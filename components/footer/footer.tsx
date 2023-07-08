@@ -9,7 +9,7 @@ const Footer: React.FC = () => {
   return (
     <Box
       component="footer"
-      sx={(theme) => ({
+      sx={theme => ({
         position: "absolute",
         bottom: 0,
         padding: theme.spacing(2),

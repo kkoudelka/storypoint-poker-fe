@@ -1,11 +1,11 @@
-import { userAtom } from "@/src/atoms/user-atom";
-import { BoardData, IVote } from "@/src/types/board.type";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Fade from "@mui/material/Fade";
 import { DocumentReference, updateDoc } from "firebase/firestore";
 import React, { useMemo } from "react";
 import { useRecoilValue } from "recoil";
+import { BoardData, IVote } from "@/src/types/board.type";
+import { userAtom } from "@/src/atoms/user-atom";
 
 interface IProps {
   docRef: DocumentReference<BoardData>;
@@ -18,12 +18,16 @@ const ActionButtons: React.FC<IProps> = ({ docRef, revealed, votes, data }) => {
   const userVal = useRecoilValue(userAtom);
 
   const isAdmin = useMemo(() => {
-    if (!data) return false;
+    if (!data) {
+      return false;
+    }
     return data.admin === userVal?.uuid;
   }, [data, userVal?.uuid]);
 
   const revealResults = async () => {
-    if (revealed) return;
+    if (revealed) {
+      return;
+    }
     try {
       await updateDoc<BoardData>(docRef, {
         showResults: true,
@@ -35,7 +39,9 @@ const ActionButtons: React.FC<IProps> = ({ docRef, revealed, votes, data }) => {
   };
 
   const reset = async () => {
-    if (votes?.length === 0 && data?.ticket === null) return;
+    if (votes?.length === 0 && data?.ticket === null) {
+      return;
+    }
     try {
       await updateDoc<BoardData>(docRef, {
         showResults: false,
@@ -52,7 +58,7 @@ const ActionButtons: React.FC<IProps> = ({ docRef, revealed, votes, data }) => {
     <>
       <Fade in={isAdmin} unmountOnExit>
         <Box
-          sx={(theme) => ({
+          sx={theme => ({
             display: "flex",
             justifyContent: "center",
             gap: theme.spacing(4),
