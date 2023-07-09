@@ -83,8 +83,8 @@ const LoginComponent: React.FC = () => {
         <Typography
           variant="subtitle1"
           sx={{
-            "&>a": {
-              color: "inherit",
+            "& > a": {
+              color: theme => theme.palette.primary.main,
             },
           }}
         >
@@ -123,6 +123,7 @@ const LoginComponent: React.FC = () => {
                   onClick={handleClickShowPassword}
                   onMouseDown={handleMouseDownPassword}
                   edge="end"
+                  tabIndex={-1}
                 >
                   {showPassword ? <VisibilityOff /> : <Visibility />}
                 </IconButton>

@@ -12,6 +12,7 @@ import Controls from "./controls";
 import BecomeAdminButton from "./become-admin";
 import DebugState from "./debug";
 import { BoardContextProvider } from "./board-context";
+import ShareButton from "./share-btn";
 import ChartContainer from "@/components/board/new-chart/chart-container";
 import {
   BoardDetailQuery,
@@ -53,13 +54,16 @@ const Board: React.FC<IProps> = ({ initialData, code }) => {
             status={board?.status ?? BoardStatus.Voting}
             isAdmin={isAdmin}
           />
-          {isAdmin && (
-            <Controls
-              code={code}
-              status={board?.status ?? BoardStatus.Voting}
-            />
-          )}
-          {!isAdmin && <BecomeAdminButton code={code} />}
+          <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
+            <ShareButton />
+            {isAdmin && (
+              <Controls
+                code={code}
+                status={board?.status ?? BoardStatus.Voting}
+              />
+            )}
+            {!isAdmin && <BecomeAdminButton code={code} />}
+          </Box>
         </Grid>
         <Grid item xs={12} sm={8} md={9}>
           {board?.status === BoardStatus.Voting && (

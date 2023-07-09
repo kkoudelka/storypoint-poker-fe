@@ -41,6 +41,7 @@ const UserMenu: React.FC = () => {
                     ? theme.palette.primary.main
                     : "white",
               })}
+              tabIndex={-1}
             >
               Login
             </Button>

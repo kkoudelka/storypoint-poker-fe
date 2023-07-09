@@ -1,10 +1,13 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 type CopiedValue = string | null;
 type CopyFn = (text: string) => Promise<boolean>; // Return success
 
-function useCopyToClipboard(): [CopiedValue, CopyFn] {
+function useCopyToClipboard({ timeout = 2500 }: { timeout?: number }) {
   const [copiedText, setCopiedText] = useState<CopiedValue>(null);
+  const [showCopied, setShowCopied] = useState<boolean>(false);
+
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const copy: CopyFn = async text => {
     if (!navigator?.clipboard) {
@@ -16,6 +19,16 @@ function useCopyToClipboard(): [CopiedValue, CopyFn] {
     try {
       await navigator.clipboard.writeText(text);
       setCopiedText(text);
+      setShowCopied(true);
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+
+      timeoutRef.current = setTimeout(() => {
+        setCopiedText(null);
+        setShowCopied(false);
+      }, timeout);
+
       return true;
     } catch (error) {
       console.warn("Copy failed", error);
@@ -24,7 +37,7 @@ function useCopyToClipboard(): [CopiedValue, CopyFn] {
     }
   };
 
-  return [copiedText, copy];
+  return { copiedText, copy, showCopied };
 }
 
 export default useCopyToClipboard;

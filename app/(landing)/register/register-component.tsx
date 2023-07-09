@@ -95,8 +95,8 @@ const RegisterComponent: React.FC = () => {
         <Typography
           variant="subtitle1"
           sx={{
-            "&>a": {
-              color: "inherit",
+            "& > a": {
+              color: theme => theme.palette.primary.main,
             },
           }}
         >
@@ -152,6 +152,7 @@ const RegisterComponent: React.FC = () => {
                   aria-label="toggle password visibility"
                   onClick={handleClickShowPassword}
                   onMouseDown={handleMouseDownPassword}
+                  tabIndex={-1}
                   edge="end"
                 >
                   {showPassword ? <VisibilityOff /> : <Visibility />}
@@ -183,6 +184,7 @@ const RegisterComponent: React.FC = () => {
                   onClick={handleClickShowPassword}
                   onMouseDown={handleMouseDownPassword}
                   edge="end"
+                  tabIndex={-1}
                 >
                   {showPassword ? <VisibilityOff /> : <Visibility />}
                 </IconButton>
