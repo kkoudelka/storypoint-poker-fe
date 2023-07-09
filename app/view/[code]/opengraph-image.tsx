@@ -1,9 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
 import { ImageResponse } from "next/server";
 import React from "react";
-import getBoardData from "../../(authenticated)/board/[code]/getData";
 import { appUrl } from "@/src/utils";
-
+import getClient from "@/src/gql/client2";
+import { BoardDetailDocument, type BoardDetailQuery } from "@/src/gql/types";
 // Image metadata
 export const alt = "Storypoint Poker Board (view-only)";
 export const size = {
@@ -12,6 +12,17 @@ export const size = {
 };
 
 export const contentType = "image/png";
+
+const getBoardData = async (code: string) => {
+  const res = await getClient().query<BoardDetailQuery>({
+    query: BoardDetailDocument,
+    variables: {
+      boardCode: code,
+    },
+  });
+
+  return res.data?.board;
+};
 
 // Image generation
 export default async function Image({
