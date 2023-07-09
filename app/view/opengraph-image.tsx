@@ -5,7 +5,7 @@ import getBoardData from "../(authenticated)/board/[code]/getData";
 import { appUrl } from "@/src/utils";
 
 // Image metadata
-export const alt = "About Acme";
+export const alt = "Storypoint Poker Board (view-only)";
 export const size = {
   width: 1200,
   height: 630,
