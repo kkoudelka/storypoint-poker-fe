@@ -5,6 +5,7 @@ import { authOptions } from "./api/auth/[...nextauth]/route";
 import AppLayout from "@/components/layout/app-layout";
 import AppProviders from "@/components/providers/app-providers";
 import "@/styles/globals.scss";
+import { appUrl } from "@/src/utils";
 
 const getDarkModePrefs = () => {
   const c = cookies();
@@ -21,6 +22,10 @@ export const metadata = {
   },
   description: "A refinement tool for agile teams",
   authors: [{ name: "Karel Koudelka", url: "https://koudelka.dev" }],
+  metadataBase: new URL(appUrl),
+  alternates: {
+    canonical: "/",
+  },
 };
 
 export default async function RootLayout({

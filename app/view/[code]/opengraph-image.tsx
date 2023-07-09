@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { ImageResponse } from "next/server";
 import React from "react";
-import getBoardData from "../(authenticated)/board/[code]/getData";
+import getBoardData from "../../(authenticated)/board/[code]/getData";
 import { appUrl } from "@/src/utils";
 
 // Image metadata
