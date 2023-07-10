@@ -59,6 +59,7 @@ const Controls: React.FC<IProps> = ({ code, status }) => {
       sx={{
         display: "flex",
         flexDirection: "column",
+        gap: 1,
       }}
     >
       <Button

@@ -18,7 +18,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useSnackbar } from "notistack";
 import axiosClient from "@/src/axios/axios-client";
-import { emailRegex } from "@/src/regex";
+import { emailRegex, usernameRegex } from "@/src/regex";
 
 interface RegProps {
   email: string;
@@ -121,18 +121,26 @@ const RegisterComponent: React.FC = () => {
         </FormControl>
 
         <FormControl fullWidth variant="outlined" error={!!errors.name}>
-          <InputLabel htmlFor="username">Username</InputLabel>
+          <InputLabel htmlFor="username">Display name</InputLabel>
           <OutlinedInput
-            id="username"
-            label="Username"
+            id="display-name"
+            label="Display name"
             {...register("name", {
               minLength: 3,
               maxLength: 20,
               required: true,
+              validate: value =>
+                value.trim().length >= 3 &&
+                value.trim().length <= 20 &&
+                usernameRegex.test(value),
             })}
+            placeholder="This is the name others will see"
           />
           {!!errors.name && (
-            <FormHelperText>Please enter some username.</FormHelperText>
+            <FormHelperText>
+              Please enter name others will recognise (3 - 20 characters, text
+              and digits only)
+            </FormHelperText>
           )}
         </FormControl>
 

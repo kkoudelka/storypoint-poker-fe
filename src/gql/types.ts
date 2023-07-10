@@ -40,6 +40,7 @@ export type Mutation = {
   __typename?: 'Mutation';
   changeAdminStatus: Scalars['Boolean']['output'];
   changeBoardStatus: Scalars['Boolean']['output'];
+  changeDisplayName: Scalars['Boolean']['output'];
   changeStatus: Scalars['Boolean']['output'];
   changeVote: Scalars['Boolean']['output'];
   createBoard: Board;
@@ -60,6 +61,11 @@ export type MutationChangeAdminStatusArgs = {
 export type MutationChangeBoardStatusArgs = {
   code: Scalars['String']['input'];
   status: BoardStatus;
+};
+
+
+export type MutationChangeDisplayNameArgs = {
+  displayName: Scalars['String']['input'];
 };
 
 
@@ -221,6 +227,13 @@ export type RemoveUserFromBoardMutationVariables = Exact<{
 
 
 export type RemoveUserFromBoardMutation = { __typename?: 'Mutation', removeUserFromBoard: boolean };
+
+export type ChangeDisplayNameMutationVariables = Exact<{
+  displayName: Scalars['String']['input'];
+}>;
+
+
+export type ChangeDisplayNameMutation = { __typename?: 'Mutation', changeDisplayName: boolean };
 
 export type GetBoardsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -532,6 +545,37 @@ export function useRemoveUserFromBoardMutation(baseOptions?: Apollo.MutationHook
 export type RemoveUserFromBoardMutationHookResult = ReturnType<typeof useRemoveUserFromBoardMutation>;
 export type RemoveUserFromBoardMutationResult = Apollo.MutationResult<RemoveUserFromBoardMutation>;
 export type RemoveUserFromBoardMutationOptions = Apollo.BaseMutationOptions<RemoveUserFromBoardMutation, RemoveUserFromBoardMutationVariables>;
+export const ChangeDisplayNameDocument = gql`
+    mutation ChangeDisplayName($displayName: String!) {
+  changeDisplayName(displayName: $displayName)
+}
+    `;
+export type ChangeDisplayNameMutationFn = Apollo.MutationFunction<ChangeDisplayNameMutation, ChangeDisplayNameMutationVariables>;
+
+/**
+ * __useChangeDisplayNameMutation__
+ *
+ * To run a mutation, you first call `useChangeDisplayNameMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useChangeDisplayNameMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [changeDisplayNameMutation, { data, loading, error }] = useChangeDisplayNameMutation({
+ *   variables: {
+ *      displayName: // value for 'displayName'
+ *   },
+ * });
+ */
+export function useChangeDisplayNameMutation(baseOptions?: Apollo.MutationHookOptions<ChangeDisplayNameMutation, ChangeDisplayNameMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<ChangeDisplayNameMutation, ChangeDisplayNameMutationVariables>(ChangeDisplayNameDocument, options);
+      }
+export type ChangeDisplayNameMutationHookResult = ReturnType<typeof useChangeDisplayNameMutation>;
+export type ChangeDisplayNameMutationResult = Apollo.MutationResult<ChangeDisplayNameMutation>;
+export type ChangeDisplayNameMutationOptions = Apollo.BaseMutationOptions<ChangeDisplayNameMutation, ChangeDisplayNameMutationVariables>;
 export const GetBoardsDocument = gql`
     query GetBoards {
   boards {

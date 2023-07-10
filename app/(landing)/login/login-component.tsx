@@ -41,15 +41,23 @@ const LoginComponent: React.FC = () => {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
+    setError,
   } = useForm<LoginProps>({ mode: "onBlur" });
 
   const onSubmit = async (data: LoginProps) => {
     const res = await signIn("credentials", {
       email: data.email,
       password: data.password,
+
+      redirect: false,
     });
 
-    if (res?.ok) {
+    if (res?.error) {
+      setError("root", { message: "Login credentials are invalid" });
+      return;
+    }
+
+    if (res?.ok === true && !res?.error) {
       router.push("/");
     }
   };
@@ -108,7 +116,11 @@ const LoginComponent: React.FC = () => {
           )}
         </FormControl>
 
-        <FormControl fullWidth variant="outlined" error={!!errors.password}>
+        <FormControl
+          fullWidth
+          variant="outlined"
+          error={!!errors.password || !!errors.root}
+        >
           <InputLabel htmlFor="outlined-adornment-password">
             Password
           </InputLabel>
@@ -133,6 +145,9 @@ const LoginComponent: React.FC = () => {
           />
           {!!errors.password && (
             <FormHelperText>Please enter a valid password.</FormHelperText>
+          )}
+          {!!errors.root && (
+            <FormHelperText>Login credentials are invalid</FormHelperText>
           )}
         </FormControl>
         <Button type="submit" disabled={isSubmitting}>

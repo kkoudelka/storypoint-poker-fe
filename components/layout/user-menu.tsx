@@ -13,6 +13,7 @@ import { useSession, signOut } from "next-auth/react";
 import Link from "next/link";
 import React from "react";
 import DarkModeSwitcher from "../user-prefs/dark-mode";
+import ChangeName from "../user-prefs/name/change-name";
 
 const UserMenu: React.FC = () => {
   const { status, data } = useSession();
@@ -52,7 +53,7 @@ const UserMenu: React.FC = () => {
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar
-                  alt="Remy Sharp"
+                  alt={data?.user?.username}
                   src={`https://api.dicebear.com/5.x/bottts-neutral/svg?seed=${data?.user?.email}`}
                 />
               </IconButton>
@@ -75,7 +76,7 @@ const UserMenu: React.FC = () => {
             >
               <Box
                 sx={{
-                  minWidth: 250,
+                  minWidth: 270,
                   display: "flex",
                   alignItems: "center",
                   height: 70,
@@ -83,18 +84,21 @@ const UserMenu: React.FC = () => {
                 }}
               >
                 <Avatar
-                  alt="Remy Sharp"
+                  alt={data?.user?.username}
                   sx={{ height: 54, width: 54, mx: 2 }}
                   src={`https://api.dicebear.com/5.x/bottts-neutral/svg?seed=${data?.user?.email}`}
                 />
                 <Box
                   sx={{
                     display: "flex",
-                    flexDirection: "column",
+                    // flexDirection: "column",
                     justifyContent: "center",
+                    alignItems: "center",
+                    gap: 1,
                   }}
                 >
                   <Typography>{data?.user?.username}</Typography>
+                  <ChangeName onOpen={handleCloseUserMenu} />
                 </Box>
               </Box>
               <Divider />

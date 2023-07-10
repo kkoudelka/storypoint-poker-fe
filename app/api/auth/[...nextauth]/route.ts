@@ -42,6 +42,7 @@ export const authOptions: AuthOptions = {
         },
         password: { label: "Password", type: "password" },
       },
+
       async authorize(credentials) {
         try {
           const result = await axios.post(
@@ -57,6 +58,10 @@ export const authOptions: AuthOptions = {
           }
 
           const user = result.data;
+
+          if (!user) {
+            return null;
+          }
           return user;
         } catch (error) {
           console.log("err", { error });
@@ -66,7 +71,7 @@ export const authOptions: AuthOptions = {
     }),
   ],
   callbacks: {
-    async jwt({ token, account, user }) {
+    async jwt({ token, account, user, trigger, session }) {
       // Persist the OAuth access_token to the token right after signin
       if (account) {
         token.accessToken = account.access_token;
@@ -75,8 +80,15 @@ export const authOptions: AuthOptions = {
       if (user) {
         token.user = user;
       }
+
+      if (trigger === "update" && session?.username) {
+        // @ts-ignore
+        token.user.username = session.username;
+      }
+
       return token;
     },
+
     async session({ session, token }) {
       // @ts-ignore
       session.accessToken = token.accessToken;
