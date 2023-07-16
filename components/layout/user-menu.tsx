@@ -7,13 +7,13 @@ import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import { useSession, signOut } from "next-auth/react";
 import Link from "next/link";
 import React from "react";
 import DarkModeSwitcher from "../user-prefs/dark-mode";
 import ChangeName from "../user-prefs/name/change-name";
+import ChangePfp from "../user-prefs/pfp/change-pfp";
 
 const UserMenu: React.FC = () => {
   const { status, data } = useSession();
@@ -50,14 +50,9 @@ const UserMenu: React.FC = () => {
         )}
         {status === "authenticated" && (
           <>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar
-                  alt={data?.user?.username}
-                  src={`https://api.dicebear.com/5.x/bottts-neutral/svg?seed=${data?.user?.email}`}
-                />
-              </IconButton>
-            </Tooltip>
+            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+              <Avatar alt={data?.user?.username} src={data?.user?.profilePic} />
+            </IconButton>
             <Menu
               sx={{ mt: "45px", minWidth: "200px" }}
               id="menu-appbar"
@@ -83,11 +78,7 @@ const UserMenu: React.FC = () => {
                   pb: 1,
                 }}
               >
-                <Avatar
-                  alt={data?.user?.username}
-                  sx={{ height: 54, width: 54, mx: 2 }}
-                  src={`https://api.dicebear.com/5.x/bottts-neutral/svg?seed=${data?.user?.email}`}
-                />
+                <ChangePfp onOpen={handleCloseUserMenu} />
                 <Box
                   sx={{
                     display: "flex",

@@ -1,3 +1,10 @@
 mutation ChangeDisplayName($displayName: String!) {
   changeDisplayName(displayName: $displayName)
 }
+
+mutation ChangePfp($pfp: Int) {
+  changePfp(pfp: $pfp) {
+    id
+    profilePic
+  }
+}

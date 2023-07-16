@@ -10,7 +10,9 @@ import ReplayIcon from "@mui/icons-material/Replay";
 import { useSnackbar } from "notistack";
 import RemoveModeratorIcon from "@mui/icons-material/RemoveModerator";
 import Box from "@mui/material/Box";
+import { useBoardContext } from "./board-context";
 import {
+  BoardStatus,
   useChangeAdminStatusMutation,
   useRemoveUserFromBoardMutation,
   useResetVotesMutation,
@@ -34,6 +36,10 @@ const UserListContextMenu: React.FC<React.PropsWithChildren<IProps>> = ({
 }) => {
   const [mutateResetVote] = useResetVotesMutation();
   const [mutateAdmin] = useChangeAdminStatusMutation();
+
+  const {
+    board: { status },
+  } = useBoardContext();
 
   const [mutateRemoveUser] = useRemoveUserFromBoardMutation();
 
@@ -140,12 +146,14 @@ const UserListContextMenu: React.FC<React.PropsWithChildren<IProps>> = ({
         }
       >
         <Box sx={{ minWidth: 256 }}>
-          <MenuItem onClick={handleResetUserVote}>
-            <ListItemIcon>
-              <ReplayIcon fontSize="small" />
-            </ListItemIcon>
-            <ListItemText>Reset vote</ListItemText>
-          </MenuItem>
+          {status !== BoardStatus.Results && (
+            <MenuItem onClick={handleResetUserVote}>
+              <ListItemIcon>
+                <ReplayIcon fontSize="small" />
+              </ListItemIcon>
+              <ListItemText>Reset vote</ListItemText>
+            </MenuItem>
+          )}
           {isModerator && (
             <MenuItem onClick={handleRemoveAdminStatus}>
               <ListItemIcon>

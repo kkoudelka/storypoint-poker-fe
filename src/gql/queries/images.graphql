@@ -1,0 +1,6 @@
+query AvailableImages {
+  getAvailableImages {
+    key
+    value
+  }
+}

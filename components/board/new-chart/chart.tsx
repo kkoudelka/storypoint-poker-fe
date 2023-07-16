@@ -62,21 +62,21 @@ const PieSummary: React.FC<IProps> = ({ data }) => {
   return (
     <Box
       sx={{
-        height: 400,
+        height: 500,
         width: "100%",
         userSelect: "none",
         pointerEvents: "none",
       }}
     >
       <ResponsiveContainer width="100%" height="100%">
-        <PieChart width={400} height={400}>
+        <PieChart width={500} height={500}>
           <Pie
             data={data}
             cx="50%"
             cy="50%"
             labelLine={false}
             label={renderCustomizedLabel}
-            outerRadius={120}
+            outerRadius={150}
             fill="#8884d8"
             dataKey="value"
           >

@@ -4,6 +4,7 @@ const nextConfig = {
   publicRuntimeConfig: {
     build: process.env.npm_package_version || "0.0.0",
   },
+  output: "standalone",
   experimental: {
     appDir: true,
   },

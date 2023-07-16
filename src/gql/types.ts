@@ -18,6 +18,12 @@ export type Scalars = {
   DateTime: { input: any; output: any; }
 };
 
+export type AvailableImage = {
+  __typename?: 'AvailableImage';
+  key: Scalars['Float']['output'];
+  value: Scalars['String']['output'];
+};
+
 export type Board = {
   __typename?: 'Board';
   code: Scalars['String']['output'];
@@ -41,6 +47,7 @@ export type Mutation = {
   changeAdminStatus: Scalars['Boolean']['output'];
   changeBoardStatus: Scalars['Boolean']['output'];
   changeDisplayName: Scalars['Boolean']['output'];
+  changePfp: User;
   changeStatus: Scalars['Boolean']['output'];
   changeVote: Scalars['Boolean']['output'];
   createBoard: Board;
@@ -66,6 +73,11 @@ export type MutationChangeBoardStatusArgs = {
 
 export type MutationChangeDisplayNameArgs = {
   displayName: Scalars['String']['input'];
+};
+
+
+export type MutationChangePfpArgs = {
+  pfp?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
@@ -112,6 +124,8 @@ export type Query = {
   __typename?: 'Query';
   board?: Maybe<Board>;
   boards: Array<Board>;
+  getAvailableImages: Array<AvailableImage>;
+  getUser: User;
 };
 
 
@@ -135,6 +149,7 @@ export type User = {
   email: Scalars['String']['output'];
   id: Scalars['Float']['output'];
   lastUpdate: Scalars['DateTime']['output'];
+  profilePic?: Maybe<Scalars['String']['output']>;
   username: Scalars['String']['output'];
 };
 
@@ -235,6 +250,13 @@ export type ChangeDisplayNameMutationVariables = Exact<{
 
 export type ChangeDisplayNameMutation = { __typename?: 'Mutation', changeDisplayName: boolean };
 
+export type ChangePfpMutationVariables = Exact<{
+  pfp?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+
+export type ChangePfpMutation = { __typename?: 'Mutation', changePfp: { __typename?: 'User', id: number, profilePic?: string | null } };
+
 export type GetBoardsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -245,14 +267,24 @@ export type BoardDetailQueryVariables = Exact<{
 }>;
 
 
-export type BoardDetailQuery = { __typename?: 'Query', board?: { __typename?: 'Board', id: number, title: string, status: BoardStatus, ticket?: string | null, ticketTimer?: any | null, userVotes: Array<{ __typename?: 'UserVote', status: UserBoardStatus, vote?: string | null, admin: boolean, user: { __typename?: 'User', id: number, username: string, email: string } }> } | null };
+export type BoardDetailQuery = { __typename?: 'Query', board?: { __typename?: 'Board', id: number, title: string, status: BoardStatus, ticket?: string | null, ticketTimer?: any | null, userVotes: Array<{ __typename?: 'UserVote', status: UserBoardStatus, vote?: string | null, admin: boolean, user: { __typename?: 'User', id: number, username: string, email: string, profilePic?: string | null } }> } | null };
+
+export type AvailableImagesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type AvailableImagesQuery = { __typename?: 'Query', getAvailableImages: Array<{ __typename?: 'AvailableImage', key: number, value: string }> };
+
+export type GetUserQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetUserQuery = { __typename?: 'Query', getUser: { __typename?: 'User', id: number, profilePic?: string | null, username: string } };
 
 export type BoardUpdateSubscriptionVariables = Exact<{
   code: Scalars['String']['input'];
 }>;
 
 
-export type BoardUpdateSubscription = { __typename?: 'Subscription', boardUpdate: { __typename?: 'Board', id: number, title: string, status: BoardStatus, ticket?: string | null, ticketTimer?: any | null, userVotes: Array<{ __typename?: 'UserVote', status: UserBoardStatus, vote?: string | null, admin: boolean, user: { __typename?: 'User', id: number, username: string, email: string } }> } };
+export type BoardUpdateSubscription = { __typename?: 'Subscription', boardUpdate: { __typename?: 'Board', id: number, title: string, status: BoardStatus, ticket?: string | null, ticketTimer?: any | null, userVotes: Array<{ __typename?: 'UserVote', status: UserBoardStatus, vote?: string | null, admin: boolean, user: { __typename?: 'User', id: number, username: string, email: string, profilePic?: string | null } }> } };
 
 
 export const JoinBoardDocument = gql`
@@ -576,6 +608,40 @@ export function useChangeDisplayNameMutation(baseOptions?: Apollo.MutationHookOp
 export type ChangeDisplayNameMutationHookResult = ReturnType<typeof useChangeDisplayNameMutation>;
 export type ChangeDisplayNameMutationResult = Apollo.MutationResult<ChangeDisplayNameMutation>;
 export type ChangeDisplayNameMutationOptions = Apollo.BaseMutationOptions<ChangeDisplayNameMutation, ChangeDisplayNameMutationVariables>;
+export const ChangePfpDocument = gql`
+    mutation ChangePfp($pfp: Int) {
+  changePfp(pfp: $pfp) {
+    id
+    profilePic
+  }
+}
+    `;
+export type ChangePfpMutationFn = Apollo.MutationFunction<ChangePfpMutation, ChangePfpMutationVariables>;
+
+/**
+ * __useChangePfpMutation__
+ *
+ * To run a mutation, you first call `useChangePfpMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useChangePfpMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [changePfpMutation, { data, loading, error }] = useChangePfpMutation({
+ *   variables: {
+ *      pfp: // value for 'pfp'
+ *   },
+ * });
+ */
+export function useChangePfpMutation(baseOptions?: Apollo.MutationHookOptions<ChangePfpMutation, ChangePfpMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<ChangePfpMutation, ChangePfpMutationVariables>(ChangePfpDocument, options);
+      }
+export type ChangePfpMutationHookResult = ReturnType<typeof useChangePfpMutation>;
+export type ChangePfpMutationResult = Apollo.MutationResult<ChangePfpMutation>;
+export type ChangePfpMutationOptions = Apollo.BaseMutationOptions<ChangePfpMutation, ChangePfpMutationVariables>;
 export const GetBoardsDocument = gql`
     query GetBoards {
   boards {
@@ -626,6 +692,7 @@ export const BoardDetailDocument = gql`
         id
         username
         email
+        profilePic
       }
       status
       vote
@@ -662,6 +729,77 @@ export function useBoardDetailLazyQuery(baseOptions?: Apollo.LazyQueryHookOption
 export type BoardDetailQueryHookResult = ReturnType<typeof useBoardDetailQuery>;
 export type BoardDetailLazyQueryHookResult = ReturnType<typeof useBoardDetailLazyQuery>;
 export type BoardDetailQueryResult = Apollo.QueryResult<BoardDetailQuery, BoardDetailQueryVariables>;
+export const AvailableImagesDocument = gql`
+    query AvailableImages {
+  getAvailableImages {
+    key
+    value
+  }
+}
+    `;
+
+/**
+ * __useAvailableImagesQuery__
+ *
+ * To run a query within a React component, call `useAvailableImagesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAvailableImagesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAvailableImagesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useAvailableImagesQuery(baseOptions?: Apollo.QueryHookOptions<AvailableImagesQuery, AvailableImagesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<AvailableImagesQuery, AvailableImagesQueryVariables>(AvailableImagesDocument, options);
+      }
+export function useAvailableImagesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AvailableImagesQuery, AvailableImagesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<AvailableImagesQuery, AvailableImagesQueryVariables>(AvailableImagesDocument, options);
+        }
+export type AvailableImagesQueryHookResult = ReturnType<typeof useAvailableImagesQuery>;
+export type AvailableImagesLazyQueryHookResult = ReturnType<typeof useAvailableImagesLazyQuery>;
+export type AvailableImagesQueryResult = Apollo.QueryResult<AvailableImagesQuery, AvailableImagesQueryVariables>;
+export const GetUserDocument = gql`
+    query GetUser {
+  getUser {
+    id
+    profilePic
+    username
+  }
+}
+    `;
+
+/**
+ * __useGetUserQuery__
+ *
+ * To run a query within a React component, call `useGetUserQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetUserQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetUserQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetUserQuery(baseOptions?: Apollo.QueryHookOptions<GetUserQuery, GetUserQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetUserQuery, GetUserQueryVariables>(GetUserDocument, options);
+      }
+export function useGetUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetUserQuery, GetUserQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetUserQuery, GetUserQueryVariables>(GetUserDocument, options);
+        }
+export type GetUserQueryHookResult = ReturnType<typeof useGetUserQuery>;
+export type GetUserLazyQueryHookResult = ReturnType<typeof useGetUserLazyQuery>;
+export type GetUserQueryResult = Apollo.QueryResult<GetUserQuery, GetUserQueryVariables>;
 export const BoardUpdateDocument = gql`
     subscription BoardUpdate($code: String!) {
   boardUpdate(code: $code) {
@@ -675,6 +813,7 @@ export const BoardUpdateDocument = gql`
         id
         username
         email
+        profilePic
       }
       status
       vote

@@ -50,9 +50,11 @@ const ChartContainer: React.FC<IProps> = ({ votes }) => {
       <Grid item xs={12} md={6}>
         <PieSummary data={groupped} />
       </Grid>
-      <Grid item xs={12} md={6}>
-        <RadarSummary data={groupped} />
-      </Grid>
+      {groupped.length > 2 && (
+        <Grid item xs={12} md={6}>
+          <RadarSummary data={groupped} />
+        </Grid>
+      )}
     </Grid>
   );
 };

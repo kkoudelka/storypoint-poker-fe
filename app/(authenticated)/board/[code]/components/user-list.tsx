@@ -22,15 +22,14 @@ import { BoardStatus, UserBoardStatus } from "@/src/gql/types";
 interface IProps {
   users:
     | {
-        __typename?: "UserVote";
         status: UserBoardStatus;
         vote?: string | null;
         admin: boolean;
         user: {
-          __typename?: "User";
           id: number;
           username: string;
           email: string;
+          profilePic: string;
         };
       }[];
 
@@ -84,9 +83,7 @@ const UserList: React.FC<IProps> = ({ users, status, code, isAdmin }) => {
                           }),
                         }}
                       >
-                        <Avatar
-                          src={`https://api.dicebear.com/5.x/bottts-neutral/svg?seed=${x.user.email}`}
-                        />
+                        <Avatar src={x.user.profilePic} />
                       </Badge>
                     </Box>
                     <Box sx={{ mr: "auto", display: "flex", gap: 1 }}>

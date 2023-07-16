@@ -13,4 +13,4 @@ export default async function Boards() {
   return <BoardsPage data={data} />;
 }
 
-export const revalidate = 30;
+export const revalidate = 0;

@@ -86,6 +86,11 @@ export const authOptions: AuthOptions = {
         token.user.username = session.username;
       }
 
+      if (trigger === "update" && session?.profilePic) {
+        // @ts-ignore
+        token.user.profilePic = session.profilePic;
+      }
+
       return token;
     },
 
