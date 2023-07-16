@@ -26,7 +26,7 @@ interface IProps {
           id: number;
           username: string;
           email: string;
-          profilePic: string;
+          profilePic?: string | null;
         };
       }[];
 
@@ -66,7 +66,10 @@ const UserList: React.FC<IProps> = ({ users, status }) => {
                         }),
                       }}
                     >
-                      <Avatar src={x.user.profilePic} />
+                      <Avatar
+                        src={x.user.profilePic ?? ""}
+                        alt={x.user.username}
+                      />
                     </Badge>
                   </Box>
                   <Box sx={{ mr: "auto", display: "flex", gap: 1 }}>

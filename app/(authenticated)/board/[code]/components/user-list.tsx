@@ -22,14 +22,16 @@ import { BoardStatus, UserBoardStatus } from "@/src/gql/types";
 interface IProps {
   users:
     | {
+        __typename?: "UserVote";
         status: UserBoardStatus;
         vote?: string | null;
         admin: boolean;
         user: {
+          __typename?: "User";
           id: number;
           username: string;
           email: string;
-          profilePic: string;
+          profilePic?: string | null;
         };
       }[];
 
@@ -83,7 +85,10 @@ const UserList: React.FC<IProps> = ({ users, status, code, isAdmin }) => {
                           }),
                         }}
                       >
-                        <Avatar src={x.user.profilePic} />
+                        <Avatar
+                          src={x.user.profilePic ?? ""}
+                          alt={x.user.username}
+                        />
                       </Badge>
                     </Box>
                     <Box sx={{ mr: "auto", display: "flex", gap: 1 }}>
